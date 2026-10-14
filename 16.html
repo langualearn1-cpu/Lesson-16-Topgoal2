@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Regular & Irregular Verbs Table & Exercises - Glory English Academy</title>
+  
+  <!-- Tailwind CSS & Canvas Confetti -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <!-- Google Fonts: Fredoka (English) & Tajawal (Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: radial-gradient(circle at 50% 0%, #fffbeb 0%, #fef3c7 25%, #e0f2fe 100%);
+      min-height: 100vh;
+      color: #1e293b;
+      touch-action: manipulation;
+    }
+
+    .en-font {
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+
+    /* Main Poster Canvas */
+    .worksheet-poster {
+      background: #ffffff;
+      border: 4px solid #38bdf8;
+      border-radius: 36px;
+      box-shadow: 0 25px 50px -12px rgba(14, 165, 233, 0.22), 0 0 0 10px #fefce8;
+    }
+
+    /* Rainbow Cloud Banner matching image */
+    .rainbow-cloud-title {
+      background: linear-gradient(135deg, #fbcfe8 0%, #fed7aa 35%, #fef08a 70%, #bae6fd 100%);
+      border: 3.5px dashed #f43f5e;
+      border-radius: 40px;
+      box-shadow: 0 10px 22px -5px rgba(244, 63, 94, 0.25);
+    }
+
+    /* V1 Base Column Styling */
+    .pill-v1 {
+      background: #e0f2fe;
+      border: 2px solid #7dd3fc;
+      border-radius: 16px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .pill-v1:hover {
+      background: #bae6fd;
+      border-color: #38bdf8;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px -3px rgba(14, 165, 233, 0.3);
+    }
+
+    /* V2 Past Column Styling */
+    .pill-v2 {
+      background: #ffedd5;
+      border: 2px solid #fdba74;
+      border-radius: 16px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .pill-v2:hover {
+      background: #fed7aa;
+      border-color: #fb923c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px -3px rgba(249, 115, 22, 0.3);
+    }
+
+    /* Active Sound Pulse */
+    .speaking-now {
+      animation: soundPulse 1.2s infinite;
+      outline: 4px solid #f59e0b !important;
+      background-color: #fef08a !important;
+    }
+    @keyframes soundPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.5); }
+      50% { transform: scale(1.04); box-shadow: 0 0 0 10px rgba(245, 158, 11, 0); }
+    }
+
+    /* Word Pills (Drag & Drop) */
+    .word-pill {
+      cursor: grab;
+      user-select: none;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .word-pill:active {
+      cursor: grabbing;
+      transform: scale(0.95);
+    }
+    .word-pill.selected-pill {
+      box-shadow: 0 0 0 4px #fbbf24, 0 10px 20px -3px rgba(245, 158, 11, 0.45);
+      transform: translateY(-3px) scale(1.05);
+      animation: pulseSelection 1.5s infinite;
+    }
+    @keyframes pulseSelection {
+      0%, 100% { box-shadow: 0 0 0 4px #fbbf24; }
+      50% { box-shadow: 0 0 0 8px #f59e0b; }
+    }
+
+    /* Drop Slots */
+    .drop-slot {
+      min-width: 120px;
+      min-height: 40px;
+      transition: all 0.2s ease;
+    }
+    .drop-slot.drag-over {
+      background-color: #fef08a !important;
+      border-color: #f59e0b !important;
+      transform: scale(1.06);
+    }
+
+    /* Instant Feedback Animations */
+    @keyframes popSuccess {
+      0% { transform: scale(0.88); }
+      50% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+    .pop-success {
+      animation: popSuccess 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes shakeSlot {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .shake-slot {
+      animation: shakeSlot 0.4s ease-in-out;
+    }
+
+    /* Flashcard Hide Mode */
+    .v2-hidden-text {
+      filter: blur(8px);
+      user-select: none;
+      transition: filter 0.2s ease;
+    }
+    .v2-revealed-text {
+      filter: blur(0) !important;
+    }
+
+    @media print {
+      body { background: white !important; }
+      .no-print { display: none !important; }
+      .worksheet-poster { box-shadow: none !important; border-width: 2px !important; }
+    }
+  </style>
+</head>
+<body class="p-2 sm:p-4 md:p-6 lg:p-8 flex justify-center">
+
+  <div class="w-full max-w-4xl flex flex-col items-center">
+
+    <!-- Top Ribbon Control Bar (No Print) -->
+    <div class="no-print w-full flex flex-wrap items-center justify-between gap-3 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-md border border-sky-200 mb-4">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-flex items-center justify-center w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 to-blue-600 text-white text-lg font-black shadow-sm">
+          📚
+        </span>
+        <div>
+          <h1 class="text-sm sm:text-base font-black text-slate-800 leading-tight">جدول الأفعال التفاعلي • REGULAR & IRREGULAR VERBS</h1>
+          <p class="text-[11px] text-sky-700 font-bold">الأفعال المنتظمة وغير المنتظمة • نطق كندي 🇨🇦 • تطبيقات عملية وسحب وإفلات</p>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-wrap gap-2">
+        <!-- Quick Switcher Tabs -->
+        <button onclick="scrollToSection('verbsTableSection')" class="px-3 py-1.5 rounded-xl bg-purple-50 hover:bg-purple-100 border border-purple-300 text-purple-800 text-xs font-black transition active:scale-95 flex items-center gap-1">
+          <span>📖</span>
+          <span>جدول الأفعال</span>
+        </button>
+
+        <button onclick="scrollToSection('fillBlanksSection')" class="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-800 text-xs font-black transition active:scale-95 flex items-center gap-1">
+          <span>✍️</span>
+          <span>أكمل الفراغات</span>
+        </button>
+
+        <button onclick="scrollToSection('matchingSection')" class="px-3 py-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 border border-teal-300 text-teal-800 text-xs font-black transition active:scale-95 flex items-center gap-1">
+          <span>🔗</span>
+          <span>تطبيق الربط والمطابقة</span>
+        </button>
+
+        <button onclick="scrollToSection('rolePlaySection')" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-800 text-xs font-black transition active:scale-95 flex items-center gap-1">
+          <span>💬</span>
+          <span>لعب الأدوار</span>
+        </button>
+
+        <!-- Flashcard Hide/Show V2 Toggle -->
+        <button id="toggleQuizModeBtn" onclick="toggleQuizMode()" class="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-300 text-indigo-800 text-xs font-black transition flex items-center gap-1">
+          <span>👁️‍🗨️</span>
+          <span id="quizBtnText">اختبار الحفظ (إخفاء الماضي)</span>
+        </button>
+
+        <!-- Live Score Counter -->
+        <div class="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white text-xs sm:text-sm font-black flex items-center gap-1 shadow-sm">
+          <span>النقاط:</span>
+          <span id="scoreDisplay">0 / 12</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Printable Worksheet Poster -->
+    <main class="worksheet-poster w-full p-4 sm:p-7 md:p-9 relative bg-white overflow-hidden shadow-2xl">
+
+      <!-- Pinned Note Decor (Top-Left matching image) -->
+      <div class="absolute top-3 left-4 flex items-center gap-2 select-none opacity-90 pointer-events-none">
+        <div class="relative w-12 h-12 bg-purple-200 border-2 border-purple-400 rounded-lg shadow-sm transform -rotate-12 flex items-center justify-center text-xs font-black text-purple-900">
+          <span class="absolute -top-3 left-3 text-xl">📌</span>
+          <span>V1 ➔ V2</span>
+        </div>
+        <span class="text-2xl text-amber-400">⭐</span>
+      </div>
+
+      <!-- Header: Pencils Decor & Academy Logo (Top-Right matching image) -->
+      <div class="flex items-center justify-between w-full mb-3 relative">
+        <div class="flex items-center gap-2 select-none">
+          <span class="text-3xl">✏️ 📐 ⭐</span>
+        </div>
+
+        <!-- Glory English Academy Circular Logo -->
+        <div class="flex flex-col items-center">
+          <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-full border-3 border-sky-500 bg-white shadow-md p-1.5 flex flex-col items-center justify-center text-center">
+            <span class="text-[9px] sm:text-[10px] font-black text-sky-800 uppercase tracking-tighter leading-none">GLORY ENGLISH</span>
+            <div class="text-lg sm:text-2xl leading-none my-0.5">📖🕊️</div>
+            <span class="text-[8px] sm:text-[9px] font-black text-sky-600 uppercase tracking-tighter leading-none">ACADEMY</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================================================
+           PART 1: REGULAR VERBS (الأفعال المنتظمة)
+           ========================================================================= -->
+      <div id="verbsTableSection"></div>
+
+      <!-- Cloud Title: Regular verbs / الأفعال المنتظمة -->
+      <div class="flex flex-col items-center justify-center text-center mb-6">
+        <div class="rainbow-cloud-title px-8 sm:px-14 py-3 sm:py-4 shadow-sm flex flex-col items-center">
+          <h2 class="en-font font-black text-2xl sm:text-3xl md:text-4xl text-slate-800 tracking-wide drop-shadow-2xs">
+            Regular verbs
+          </h2>
+          <h3 class="font-black text-lg sm:text-2xl text-slate-900 mt-0.5">
+            الأفعال المنتظمة
+          </h3>
+        </div>
+        <div class="flex items-center gap-2 mt-2">
+          <p class="text-xs sm:text-sm font-bold text-slate-500">
+            انقر على أي فعل بالإنجليزية لسماع النطق الكندي الفصيح 🇨🇦
+          </p>
+          <button onclick="readAllRegularVerbs()" class="px-2.5 py-1 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-900 text-xs font-black transition flex items-center gap-1 shadow-2xs">
+            <span>🔊</span>
+            <span>قراءة القسم كاملاً</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Regular Verbs Table Container -->
+      <div class="bg-purple-50/40 border-2 border-purple-200 rounded-3xl p-3 sm:p-5 mb-8 shadow-inner">
+        
+        <!-- Table Column Headers -->
+        <div class="grid grid-cols-2 gap-3 sm:gap-6 mb-3 text-center" dir="ltr">
+          <div class="bg-sky-500 text-white font-black py-2.5 px-4 rounded-2xl shadow-sm flex items-center justify-center gap-2">
+            <span class="en-font text-base sm:text-lg">V1 Base</span>
+            <span class="text-xs sm:text-sm font-bold text-sky-100" dir="rtl">(المصدر V1)</span>
+          </div>
+          <div class="bg-amber-500 text-white font-black py-2.5 px-4 rounded-2xl shadow-sm flex items-center justify-center gap-2">
+            <span class="en-font text-base sm:text-lg">V2 Past</span>
+            <span class="text-xs sm:text-sm font-bold text-amber-100" dir="rtl">(الماضي V2)</span>
+          </div>
+        </div>
+
+        <!-- Regular Verbs 4 Rows Matching Image Layout -->
+        <div class="flex flex-col gap-2.5 sm:gap-3" dir="ltr">
+          
+          <!-- 1. arrive -> arrived -->
+          <div id="row-reg-arrive" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('arrive', 'يصل', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">✈️</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">arrive</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يصل</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-sky-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('arrived', 'وصل', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">arrived</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">وصل</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. treat -> treated -->
+          <div id="row-reg-treat" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('treat', 'يعامل', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🤝</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">treat</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يعامل</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-sky-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('treated', 'عامل', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">treated</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">عامل</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. love -> loved -->
+          <div id="row-reg-love" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('love', 'يحب', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">❤️</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">love</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يحب</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-rose-500 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('loved', 'أحبّ', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">loved</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">أحبّ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. stay -> stayed -->
+          <div id="row-reg-stay" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('stay', 'يبقى', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🏠</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">stay</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يبقى</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-teal-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('stayed', 'بقي', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">stayed</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">بقي</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =========================================================================
+           PART 2: IRREGULAR VERBS (الأفعال غير المنتظمة)
+           ========================================================================= -->
+      <!-- Title: irregular verbs / الأفعال غير المنتظمة -->
+      <div class="flex flex-col items-center justify-center text-center mb-6">
+        <h2 class="en-font font-black text-2xl sm:text-3xl md:text-4xl text-slate-900 tracking-wide">
+          irregular verbs / الأفعال غير المنتظمة
+        </h2>
+        <div class="flex items-center gap-2 mt-2">
+          <p class="text-xs sm:text-sm font-bold text-slate-500">
+            تتغير صيغتها بالكامل في الماضي V2 دون إضافة ed
+          </p>
+          <button onclick="readAllIrregularVerbs()" class="px-2.5 py-1 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 text-xs font-black transition flex items-center gap-1 shadow-2xs">
+            <span>🔊</span>
+            <span>قراءة القسم كاملاً</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Irregular Verbs Table Container -->
+      <div class="bg-amber-50/40 border-2 border-amber-200 rounded-3xl p-3 sm:p-5 mb-8 shadow-inner relative">
+        
+        <!-- Table Column Headers -->
+        <div class="grid grid-cols-2 gap-3 sm:gap-6 mb-3 text-center" dir="ltr">
+          <div class="bg-sky-500 text-white font-black py-2.5 px-4 rounded-2xl shadow-sm flex items-center justify-center gap-2">
+            <span class="en-font text-base sm:text-lg">V1 Base</span>
+            <span class="text-xs sm:text-sm font-bold text-sky-100" dir="rtl">(المصدر V1)</span>
+          </div>
+          <div class="bg-amber-500 text-white font-black py-2.5 px-4 rounded-2xl shadow-sm flex items-center justify-center gap-2">
+            <span class="en-font text-base sm:text-lg">V2 Past</span>
+            <span class="text-xs sm:text-sm font-bold text-amber-100" dir="rtl">(الماضي V2)</span>
+          </div>
+        </div>
+
+        <!-- Irregular Verbs 14 Rows Matching Image Layout -->
+        <div class="flex flex-col gap-2.5 sm:gap-3" dir="ltr" id="irregularVerbsContainer">
+          
+          <!-- 1. be -> was/were -->
+          <div id="row-irreg-be" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('be, am, is, are', 'يكون', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">👥</span>
+                <span class="en-font font-black text-sm sm:text-base text-slate-800 group-hover:text-sky-700">be <span class="text-xs text-slate-500">(am/is/are)</span></span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يكون</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-sky-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('was, were', 'كان أو كانوا', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">was / were</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">كان / كانوا</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. eat -> ate -->
+          <div id="row-irreg-eat" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('eat', 'يأكل', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🍎</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">eat</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يأكل</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-sky-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('ate', 'أكل', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">ate</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">أكل</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. see -> saw -->
+          <div id="row-irreg-see" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('see', 'يرى', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">👁️</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">see</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يرى</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-amber-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('saw', 'رأى', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">saw</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">رأى</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. meet -> met -->
+          <div id="row-irreg-meet" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('meet', 'يقابل', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🤝</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">meet</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يقابل</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-rose-500 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('met', 'قابل', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">met</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">قابل</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 5. read -> read -->
+          <div id="row-irreg-read" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('read', 'يقرأ', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">📖</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">read</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يقرأ</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-rose-500 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('read', 'قرأ', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">read</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">قرأ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 6. fall -> fell -->
+          <div id="row-irreg-fall" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('fall', 'يسقط', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🍂</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">fall</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يسقط</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-amber-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('fell', 'سقط', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">fell</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">سقط</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 7. drink -> drank -->
+          <div id="row-irreg-drink" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('drink', 'يشرب', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🥤</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">drink</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يشرب</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-rose-500 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('drank', 'شرب', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">drank</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">شرب</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 8. go -> went -->
+          <div id="row-irreg-go" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('go', 'يذهب', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🏃</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">go</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يذهب</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-teal-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('went', 'ذهب', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">went</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">ذهب</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 9. take -> took -->
+          <div id="row-irreg-take" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('take', 'يأخذ', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🎁</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">take</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يأخذ</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-teal-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('took', 'أخذ', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">took</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">أخذ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 10. buy -> bought -->
+          <div id="row-irreg-buy" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('buy', 'يشتري', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🛍️</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">buy</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يشتري</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-teal-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('bought', 'اشترى', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">bought</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">اشترى</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 11. make -> made -->
+          <div id="row-irreg-make" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('make', 'يصنع', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🛠️</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">make</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يصنع</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-sky-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('made', 'صنع', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">made</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">صنع</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 12. have -> had -->
+          <div id="row-irreg-have" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('have', 'يملك', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🔑</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">have</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يملك</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-amber-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('had', 'ملك', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">had</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">ملك</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 13. wake up -> woke up -->
+          <div id="row-irreg-wake" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('wake up', 'يستيقظ', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">⏰</span>
+                <span class="en-font font-black text-sm sm:text-base text-slate-800 group-hover:text-sky-700">wake up</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يستيقظ</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-rose-500 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('woke up', 'استيقظ', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-sm sm:text-base text-slate-800 group-hover:text-amber-700 v2-text">woke up</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">استيقظ</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 14. get -> got -->
+          <div id="row-irreg-get" class="grid grid-cols-2 gap-3 sm:gap-6 items-center">
+            <button onclick="speakVerb('get', 'يحصل على', this)" class="pill-v1 py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+              <div class="flex items-center gap-2 sm:gap-3">
+                <span class="text-xl sm:text-2xl">🏆</span>
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-sky-700">get</span>
+              </div>
+              <span class="text-xs sm:text-sm font-black text-sky-800" dir="rtl">يحصل على</span>
+            </button>
+            <div class="relative flex items-center">
+              <span class="absolute -left-3 sm:-left-4 text-xl sm:text-2xl text-teal-600 font-black pointer-events-none select-none z-10">➔</span>
+              <button onclick="speakVerb('got', 'حصل على', this)" class="pill-v2 w-full py-2 sm:py-2.5 px-3 sm:px-4 flex items-center justify-between shadow-xs group">
+                <span class="en-font font-black text-base sm:text-lg text-slate-800 group-hover:text-amber-700 v2-text">got</span>
+                <span class="text-xs sm:text-sm font-black text-amber-800" dir="rtl">حصل على</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Teacher Avatar (Bottom Right matching image) -->
+        <div class="flex items-center justify-end mt-4 pt-3 border-t border-amber-200 gap-3">
+          <div class="text-right">
+            <span class="text-xs font-black text-amber-950 block">المعلمة ترشدك:</span>
+            <span class="text-[11px] font-bold text-slate-500 block leading-tight">
+              "احفظ تصريفات الأفعال غير المنتظمة جيداً فهي مفتاح التحدث بطلاقة!"
+            </span>
+          </div>
+          <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-orange-100 border-2 border-amber-400 flex items-center justify-center text-3xl shadow-sm shrink-0">
+            👩‍🏫
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =========================================================================
+           PRACTICAL EXERCISE 1: FILL IN THE BLANKS (سحب وإفلات)
+           ========================================================================= -->
+      <div id="fillBlanksSection"></div>
+
+      <section class="bg-gradient-to-br from-amber-50/80 to-orange-50/60 border-3 border-amber-300 rounded-3xl p-4 sm:p-6 mb-8 relative shadow-sm">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center justify-center text-center mb-5 pb-3 border-b-2 border-amber-200">
+          <h3 class="en-font font-black text-lg sm:text-xl text-amber-950 flex items-center justify-center gap-2">
+            <span class="w-7 h-7 rounded-full bg-amber-600 text-white text-sm flex items-center justify-center shrink-0">1</span>
+            <span>Complete with the correct Past form (V2)</span>
+          </h3>
+          <p class="text-xs sm:text-sm font-bold text-amber-800 mt-1">
+            تطبيق عملي: اختر الفعل بالماضي من صندوق الكلمات وأكمل الجمل التالية (اسحب الكلمة أو انقر عليها ثم انقر في الفراغ)
+          </p>
+        </div>
+
+        <!-- Word Bank for Exercise 1 -->
+        <div class="mb-5 bg-white/95 border-2 border-amber-300 rounded-2xl p-3.5 shadow-sm">
+          <div class="flex items-center justify-between mb-2.5 flex-wrap gap-2">
+            <span class="text-xs sm:text-sm font-black text-slate-800 flex items-center gap-1.5">
+              <span>📦</span>
+              <span>صندوق كلمات الماضي (V2):</span>
+            </span>
+            <span class="text-[11px] font-bold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full">
+              🇨🇦 نطق كندي فصيح
+            </span>
+          </div>
+
+          <div id="ex1WordBank" class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3" dir="ltr">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Sentences Container -->
+        <div class="flex flex-col gap-3.5" dir="ltr" id="ex1SentencesContainer">
+          <!-- Rendered by JS -->
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           PRACTICAL EXERCISE 2: VERB MATCHING CHALLENGE (اربط المصدر بالماضي)
+           ========================================================================= -->
+      <div id="matchingSection"></div>
+
+      <section class="bg-gradient-to-br from-teal-50/80 to-emerald-50/60 border-3 border-teal-300 rounded-3xl p-4 sm:p-6 mb-8 relative shadow-sm">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center justify-center text-center mb-5 pb-3 border-b-2 border-teal-200">
+          <h3 class="en-font font-black text-lg sm:text-xl text-teal-950 flex items-center justify-center gap-2">
+            <span class="w-7 h-7 rounded-full bg-teal-600 text-white text-sm flex items-center justify-center shrink-0">2</span>
+            <span>Match the Base Verb (V1) with its Past (V2)</span>
+          </h3>
+          <p class="text-xs sm:text-sm font-bold text-teal-800 mt-1">
+            تطبيق الربط والمطابقة: انقر على الفعل في المصدر (V1) ثم انقر على تصريفه الصحيح في الماضي (V2)
+          </p>
+        </div>
+
+        <!-- Matching Board -->
+        <div class="grid grid-cols-2 gap-4 sm:gap-6" dir="ltr">
+          <!-- V1 Cards Column -->
+          <div class="flex flex-col gap-2.5" id="matchColV1">
+            <h4 class="text-xs sm:text-sm font-black text-sky-900 bg-sky-100 py-1.5 px-3 rounded-xl text-center">
+              V1 Base (المصدر)
+            </h4>
+            <!-- Rendered by JS -->
+          </div>
+
+          <!-- V2 Cards Column -->
+          <div class="flex flex-col gap-2.5" id="matchColV2">
+            <h4 class="text-xs sm:text-sm font-black text-amber-900 bg-amber-100 py-1.5 px-3 rounded-xl text-center">
+              V2 Past (الماضي)
+            </h4>
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =========================================================================
+           PRACTICAL EXERCISE 3: ROLE-PLAY CONVERSATION (سارة وليلى)
+           ========================================================================= -->
+      <div id="rolePlaySection"></div>
+
+      <section class="bg-gradient-to-br from-purple-50/70 to-pink-50/50 border-3 border-purple-300 rounded-3xl p-4 sm:p-6 mb-8 relative shadow-sm">
+        
+        <!-- Header -->
+        <div class="flex flex-col items-center justify-center text-center mb-5 pb-3 border-b-2 border-purple-200">
+          <h3 class="en-font font-black text-lg sm:text-xl text-purple-950 flex items-center justify-center gap-2">
+            <span class="w-7 h-7 rounded-full bg-purple-600 text-white text-sm flex items-center justify-center shrink-0">3</span>
+            <span>Role-Play Conversation: Practice Past Verbs</span>
+          </h3>
+          <p class="text-xs sm:text-sm font-bold text-purple-800 mt-1">
+            لعبة لعب الأدوار بشخصيتين (محادثة ناطقة بالماضي البسيط بين سارة وليلى باستخدام أفعال الجدول)
+          </p>
+        </div>
+
+        <!-- Controls Bar -->
+        <div class="flex items-center justify-between mb-4 flex-wrap gap-2" dir="rtl">
+          <div class="flex items-center gap-2">
+            <button onclick="playFullRolePlay()" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white font-black text-xs sm:text-sm shadow-md flex items-center gap-1.5 transition active:scale-95">
+              <span>▶️</span>
+              <span>تشغيل المحادثة بالكامل تلقائياً</span>
+            </button>
+            <button onclick="stopSpeech()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition">
+              ⏹️ إيقاف
+            </button>
+          </div>
+          <span class="text-xs font-bold text-purple-800 bg-purple-100 px-3 py-1 rounded-full">
+            تبادل الأدوار: انقر على أي شخصية للاستماع إليها
+          </span>
+        </div>
+
+        <!-- Two Character Comic Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5" dir="ltr">
+          
+          <!-- Character 1: Sarah -->
+          <div class="bg-white border-2 border-pink-300 rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-2xs">
+            <div class="flex items-center justify-between mb-3" dir="rtl">
+              <span class="bg-pink-600 text-white text-xs font-black px-3 py-1 rounded-xl">
+                👧 Sarah (تسأل عن يوم أمس)
+              </span>
+              <button onclick="speakRolePlayLine(1)" class="text-xs text-pink-700 hover:text-pink-900 font-black flex items-center gap-1">
+                <span>🔊</span>
+                <span>استمع لسارة</span>
+              </button>
+            </div>
+
+            <!-- Speech Bubble -->
+            <div id="rpBubble1" class="relative bg-pink-50/70 border-2 border-pink-300 rounded-[24px] p-4 text-center my-2 shadow-inner transition">
+              <p class="en-font font-black text-slate-800 text-sm sm:text-base leading-relaxed" id="rpText1">
+                "What did you do yesterday, Laila?"
+              </p>
+              <div class="inline-block bg-white/90 border border-pink-200 px-3 py-0.5 rounded-full text-[11px] font-bold text-pink-800 mt-2" dir="rtl">
+                "ماذا فعلتِ بالأمس يا ليلى؟"
+              </div>
+            </div>
+
+            <!-- Character Avatar -->
+            <div class="flex items-center justify-center mt-2">
+              <div class="w-14 h-14 rounded-full bg-pink-100 border-2 border-pink-400 flex items-center justify-center text-3xl shadow-sm">
+                👧
+              </div>
+            </div>
+          </div>
+
+          <!-- Character 2: Laila -->
+          <div class="bg-white border-2 border-purple-300 rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-2xs">
+            <div class="flex items-center justify-between mb-3" dir="rtl">
+              <span class="bg-purple-600 text-white text-xs font-black px-3 py-1 rounded-xl">
+                👩 Laila (تجيب باستخدام أفعال الجدول)
+              </span>
+              <button onclick="speakRolePlayLine(2)" class="text-xs text-purple-700 hover:text-purple-900 font-black flex items-center gap-1">
+                <span>🔊</span>
+                <span>استمع لليلى</span>
+              </button>
+            </div>
+
+            <!-- Speech Bubble -->
+            <div id="rpBubble2" class="relative bg-purple-50/70 border-2 border-purple-300 rounded-[24px] p-4 text-center my-2 shadow-inner transition">
+              <p class="en-font font-black text-slate-800 text-sm sm:text-base leading-relaxed" id="rpText2">
+                "I bought a book, drank fresh orange juice, and saw my teacher!"
+              </p>
+              <div class="inline-block bg-white/90 border border-purple-200 px-3 py-0.5 rounded-full text-[11px] font-bold text-purple-800 mt-2" dir="rtl">
+                "اشتريتُ كتاباً، وشربتُ عصير برتقال طازج، ورأيتُ معلمتي!"
+              </div>
+            </div>
+
+            <!-- Character Avatar -->
+            <div class="flex items-center justify-center mt-2">
+              <div class="w-14 h-14 rounded-full bg-purple-100 border-2 border-purple-400 flex items-center justify-center text-3xl shadow-sm">
+                👩
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- Worksheet Footer -->
+      <footer class="pt-4 border-t-2 border-slate-100 flex items-center justify-between relative px-2 sm:px-4">
+        <div class="flex items-center gap-2">
+          <div class="w-9 h-9 rounded-full border-2 border-sky-400 bg-sky-50 flex items-center justify-center text-lg">
+            📖
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[11px] font-black text-sky-900 leading-tight">Glory English Academy</span>
+            <span class="text-[9px] font-bold text-slate-400">Regular & Irregular Verbs Mastery • Audio & Exercises</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 text-2xl select-none opacity-80">
+          <span>✏️ 🎒 📐 🌟</span>
+        </div>
+      </footer>
+
+    </main>
+
+    <!-- Bottom Print & Control Buttons -->
+    <div class="no-print w-full mt-4 flex items-center justify-center gap-3 flex-wrap">
+      <button onclick="window.print()" class="px-5 py-2.5 rounded-2xl bg-white hover:bg-slate-50 border-2 border-slate-300 text-slate-700 font-bold text-sm shadow-sm flex items-center gap-2 transition">
+        <span>🖨️</span>
+        <span>طباعة ورقة العمل والجدول</span>
+      </button>
+      <button onclick="resetAllExercises()" class="px-5 py-2.5 rounded-2xl bg-rose-50 hover:bg-rose-100 border border-rose-300 text-rose-700 font-black text-sm shadow-sm flex items-center gap-2 transition">
+        <span>🔄</span>
+        <span>إعادة تعيين جميع التمارين</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Instant Feedback Modal Toast -->
+  <div id="toastNotification" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none transition-all duration-300 transform translate-y-28 opacity-0">
+    <div class="bg-slate-900 text-white px-6 py-3.5 rounded-2xl shadow-2xl border-2 border-sky-400 flex items-center gap-3 backdrop-blur-md">
+      <span id="toastIcon" class="text-2xl">✨</span>
+      <div>
+        <p id="toastTitle" class="text-base font-black text-white"></p>
+        <p id="toastMsg" class="text-xs text-slate-200 font-medium"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       1. WEB AUDIO SYNTHESIZER (CHIMES & TONES)
+       ========================================================================= */
+    class SoundFX {
+      constructor() {
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      playSuccess() {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+          gain.gain.setValueAtTime(0.001, now + idx * 0.08);
+          gain.gain.exponentialRampToValueAtTime(0.2, now + idx * 0.08 + 0.02);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.28);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.08);
+          osc.stop(now + idx * 0.08 + 0.3);
+        });
+      }
+      playError() {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const notes = [280, 220];
+        notes.forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+          gain.gain.setValueAtTime(0.15, now + idx * 0.12);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.22);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.12);
+          osc.stop(now + idx * 0.12 + 0.24);
+        });
+      }
+      playPop() {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.frequency.setValueAtTime(450, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.06);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.07);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      }
+    }
+    const sfx = new SoundFX();
+
+    /* =========================================================================
+       2. CANADIAN SPEAKER & ARABIC FEEDBACK SYNTHESIZER
+       ========================================================================= */
+    class CanadianSpeaker {
+      constructor() {
+        this.synth = window.speechSynthesis;
+        this.voice = null;
+        this.initVoice();
+        if (this.synth && this.synth.onvoiceschanged !== undefined) {
+          this.synth.onvoiceschanged = () => this.initVoice();
+        }
+      }
+      initVoice() {
+        if (!this.synth) return;
+        const voices = this.synth.getVoices();
+        this.voice = voices.find(v => v.lang === 'en-CA' || v.lang.includes('CA') || (v.lang.startsWith('en') && v.name.toLowerCase().includes('canada')))
+          || voices.find(v => v.lang.startsWith('en') && (v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('samantha') || v.name.toLowerCase().includes('zira')))
+          || voices.find(v => v.lang.startsWith('en'))
+          || null;
+      }
+      speak(text, onEndCallback = null) {
+        if (!this.synth) { if (onEndCallback) onEndCallback(); return; }
+        this.synth.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        if (this.voice) utter.voice = this.voice;
+        utter.lang = 'en-CA';
+        utter.rate = 0.88;
+        utter.pitch = 1.05;
+        utter.volume = 1.0;
+
+        if (onEndCallback) {
+          utter.onend = () => onEndCallback();
+          utter.onerror = () => onEndCallback();
+        }
+        this.synth.speak(utter);
+      }
+    }
+    const canadianSpeaker = new CanadianSpeaker();
+
+    // Arabic vocal feedback: "الإجابة صحيحة" / "إجابة خاطئة"
+    function speakArabicFeedback(isCorrect, callback = null) {
+      try {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const phrase = isCorrect ? "الإجابة صحيحة" : "إجابة خاطئة";
+          const utter = new SpeechSynthesisUtterance(phrase);
+          utter.lang = 'ar-SA';
+          utter.rate = 0.95;
+          utter.pitch = 1.05;
+          utter.volume = 1.0;
+          const voices = window.speechSynthesis.getVoices();
+          const arVoice = voices.find(v => v.lang && (v.lang.startsWith('ar') || v.lang.includes('AR')));
+          if (arVoice) utter.voice = arVoice;
+          if (callback) {
+            utter.onend = () => callback();
+            utter.onerror = () => callback();
+          }
+          window.speechSynthesis.speak(utter);
+        } else if (callback) {
+          callback();
+        }
+      } catch (err) {
+        if (callback) callback();
+      }
+    }
+
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    function showFeedbackToast(isCorrect, message) {
+      const toast = document.getElementById('toastNotification');
+      if (!toast) return;
+      const inner = toast.querySelector('div');
+      const title = document.getElementById('toastTitle');
+      const msg = document.getElementById('toastMsg');
+      const icon = document.getElementById('toastIcon');
+
+      if (isCorrect) {
+        inner.className = "bg-emerald-600 text-white px-6 py-3.5 rounded-2xl shadow-2xl border-2 border-emerald-300 flex items-center gap-3 backdrop-blur-md transform scale-105 transition duration-200";
+        icon.textContent = "✅";
+        title.textContent = "الإجابة صحيحة";
+        msg.textContent = message || "أحسنت! إجابة صحيحة وممتازة.";
+      } else {
+        inner.className = "bg-rose-600 text-white px-6 py-3.5 rounded-2xl shadow-2xl border-2 border-rose-300 flex items-center gap-3 backdrop-blur-md transform scale-105 transition duration-200";
+        icon.textContent = "❌";
+        title.textContent = "إجابة خاطئة";
+        msg.textContent = message || "حاول مرة أخرى! راجع تصريف الفعل في الجدول أعلاه.";
+      }
+
+      toast.classList.remove('translate-y-28', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-28', 'opacity-0');
+      }, 2500);
+    }
+
+    /* =========================================================================
+       3. INTERACTIVE VERBS TABLE ACTIONS
+       ========================================================================= */
+    function speakVerb(englishWord, arabicMeaning, el = null) {
+      sfx.playPop();
+      if (el) {
+        document.querySelectorAll('.speaking-now').forEach(e => e.classList.remove('speaking-now'));
+        el.classList.add('speaking-now');
+        setTimeout(() => el.classList.remove('speaking-now'), 1200);
+      }
+      canadianSpeaker.speak(englishWord, () => {
+        showFeedbackToast(true, `${englishWord} : ${arabicMeaning}`);
+      });
+    }
+
+    // Auto-read full regular section
+    const REGULAR_LIST = [
+      { v1: "arrive", v2: "arrived" },
+      { v1: "treat", v2: "treated" },
+      { v1: "love", v2: "loved" },
+      { v1: "stay", v2: "stayed" }
+    ];
+
+    function readAllRegularVerbs(index = 0) {
+      if (index >= REGULAR_LIST.length) {
+        showFeedbackToast(true, "تم الانتهاء من قراءة الأفعال المنتظمة بنجاح 🌟");
+        return;
+      }
+      const item = REGULAR_LIST[index];
+      const row = document.getElementById(`row-reg-${item.v1}`);
+      if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      canadianSpeaker.speak(`${item.v1}, ${item.v2}`, () => {
+        setTimeout(() => readAllRegularVerbs(index + 1), 500);
+      });
+    }
+
+    // Auto-read full irregular section
+    const IRREGULAR_LIST = [
+      { v1: "be", v2: "was, were", key: "be" },
+      { v1: "eat", v2: "ate", key: "eat" },
+      { v1: "see", v2: "saw", key: "see" },
+      { v1: "meet", v2: "met", key: "meet" },
+      { v1: "read", v2: "read", key: "read" },
+      { v1: "fall", v2: "fell", key: "fall" },
+      { v1: "drink", v2: "drank", key: "drink" },
+      { v1: "go", v2: "went", key: "go" },
+      { v1: "take", v2: "took", key: "take" },
+      { v1: "buy", v2: "bought", key: "buy" },
+      { v1: "make", v2: "made", key: "make" },
+      { v1: "have", v2: "had", key: "have" },
+      { v1: "wake up", v2: "woke up", key: "wake" },
+      { v1: "get", v2: "got", key: "get" }
+    ];
+
+    function readAllIrregularVerbs(index = 0) {
+      if (index >= IRREGULAR_LIST.length) {
+        showFeedbackToast(true, "تم الانتهاء من قراءة الأفعال غير المنتظمة بنجاح 🌟");
+        return;
+      }
+      const item = IRREGULAR_LIST[index];
+      const row = document.getElementById(`row-irreg-${item.key}`);
+      if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      canadianSpeaker.speak(`${item.v1}, ${item.v2}`, () => {
+        setTimeout(() => readAllIrregularVerbs(index + 1), 500);
+      });
+    }
+
+    // Toggle Quiz Flashcard Mode (hide V2 to test memory)
+    let isQuizMode = false;
+    function toggleQuizMode() {
+      isQuizMode = !isQuizMode;
+      document.querySelectorAll('.v2-text').forEach(el => {
+        if (isQuizMode) {
+          el.classList.add('v2-hidden-text');
+        } else {
+          el.classList.remove('v2-hidden-text');
+        }
+      });
+      document.getElementById('quizBtnText').textContent = isQuizMode ? "إظهار الإجابات (إلغاء التحدي)" : "اختبار الحفظ (إخفاء الماضي)";
+      showFeedbackToast(true, isQuizMode ? "تم إخفاء أفعال الماضي V2! اختبر حفظك بالنقر لسماع الحل." : "تم إظهار جميع الأفعال في الماضي.");
+    }
+
+    /* =========================================================================
+       4. PRACTICAL EXERCISE 1 DATA & LOGIC (FILL IN THE BLANKS)
+       ========================================================================= */
+    const EX1_DATA = [
+      { id: 1, base: "wake up", correct: "woke up", prefix: "Yesterday morning, Fahad", suffix: "at 7:00 a.m.", icon: "⏰", arabic: "أمس صباحاً، استيقظ فهد في تمام السابعة." },
+      { id: 2, base: "eat", correct: "ate", prefix: "We", suffix: "delicious pancakes for breakfast.", icon: "🥞", arabic: "أكلنا فطائر بانكيك لذيذة على الإفطار." },
+      { id: 3, base: "drink", correct: "drank", prefix: "Sarah", suffix: "fresh orange juice.", icon: "🥤", arabic: "شربت سارة عصير برتقال طازج." },
+      { id: 4, base: "go", correct: "went", prefix: "They", suffix: "to the park with their friends.", icon: "🏃", arabic: "ذهبوا إلى الحديقة مع أصدقائهم." },
+      { id: 5, base: "buy", correct: "bought", prefix: "Mom", suffix: "a lovely gift from the market.", icon: "🛍️", arabic: "اشترت أمي هدية لطيفة من السوق." },
+      { id: 6, base: "arrive", correct: "arrived", prefix: "The airplane", suffix: "on time at the airport.", icon: "✈️", arabic: "وصلت الطائرة في موعدها بالمطار. (فعل منتظم)" }
+    ];
+
+    const EX1_WORDS = ["woke up", "ate", "drank", "went", "bought", "arrived"];
+    const ex1SlotsState = {};
+    EX1_DATA.forEach(d => ex1SlotsState[d.id] = null);
+    let selectedEx1Word = null;
+
+    function renderEx1WordBank() {
+      const bank = document.getElementById('ex1WordBank');
+      bank.innerHTML = '';
+
+      EX1_WORDS.forEach(word => {
+        const isPlaced = Object.values(ex1SlotsState).includes(word);
+        const pill = document.createElement('div');
+        pill.id = `pill-ex1-${word.replace(/\s+/g, '')}`;
+        pill.className = `word-pill px-4 py-2 rounded-2xl border-2 border-amber-400 bg-amber-50 text-amber-950 font-black en-font text-sm sm:text-base shadow-sm hover:scale-105 transition flex items-center gap-2 cursor-pointer ${isPlaced ? 'opacity-40 grayscale pointer-events-none' : ''}`;
+        pill.setAttribute('draggable', 'true');
+        pill.innerHTML = `<span>${word}</span>`;
+
+        pill.onclick = () => {
+          sfx.playPop();
+          canadianSpeaker.speak(word);
+          selectEx1Pill(word, pill);
+        };
+
+        pill.ondragstart = (e) => {
+          e.dataTransfer.setData("text/plain", word);
+          selectedEx1Word = word;
+          sfx.playPop();
+        };
+
+        bank.appendChild(pill);
+      });
+    }
+
+    function selectEx1Pill(word, el) {
+      if (selectedEx1Word === word) {
+        selectedEx1Word = null;
+        el.classList.remove('selected-pill');
+      } else {
+        document.querySelectorAll('#ex1WordBank .word-pill').forEach(p => p.classList.remove('selected-pill'));
+        selectedEx1Word = word;
+        el.classList.add('selected-pill');
+        showFeedbackToast(true, `تم اختيار (${word}). انقر الآن في الفراغ المناسب.`);
+      }
+    }
+
+    function renderEx1Sentences() {
+      const container = document.getElementById('ex1SentencesContainer');
+      container.innerHTML = '';
+
+      EX1_DATA.forEach(item => {
+        const row = document.createElement('div');
+        row.id = `ex1-row-${item.id}`;
+        row.className = "bg-white border-2 border-amber-200 hover:border-amber-400 rounded-2xl p-3 sm:p-4 shadow-2xs transition flex flex-col justify-between";
+
+        const val = ex1SlotsState[item.id];
+        let slotHtml = '';
+
+        if (val) {
+          const isCorrect = (val.toLowerCase() === item.correct.toLowerCase());
+          if (isCorrect) {
+            slotHtml = `
+              <span onclick="clearEx1Slot(${item.id})" class="cursor-pointer inline-flex items-center gap-1 bg-emerald-100 border-2 border-emerald-500 text-emerald-950 px-3 py-1 rounded-xl font-black en-font text-sm sm:text-base hover:bg-rose-100 transition shadow-2xs" title="انقر للإزالة">
+                ${val} <span class="text-[10px] bg-emerald-600 text-white px-1.5 py-0.5 rounded-md">✓</span>
+              </span>
+            `;
+          } else {
+            slotHtml = `
+              <span onclick="clearEx1Slot(${item.id})" class="cursor-pointer inline-flex items-center gap-1 bg-rose-100 border-2 border-rose-400 text-rose-950 px-3 py-1 rounded-xl font-black en-font text-sm sm:text-base line-through hover:bg-rose-200 transition shadow-2xs" title="انقر للتصحيح">
+                ${val} <span class="text-[10px] bg-rose-600 text-white px-1.5 py-0.5 rounded-md">✗</span>
+              </span>
+            `;
+          }
+        } else {
+          slotHtml = `
+            <span onclick="handleEx1SlotClick(${item.id})" ondragover="event.preventDefault(); this.classList.add('drag-over');" ondragleave="this.classList.remove('drag-over');" ondrop="handleEx1Drop(event, ${item.id})" class="drop-slot inline-block border-2 border-dashed border-amber-400 bg-amber-50/60 hover:bg-amber-100 px-4 py-1 rounded-xl text-amber-800 text-xs sm:text-sm font-bold cursor-pointer transition">
+              [ ..... (${item.base}) ..... ]
+            </span>
+          `;
+        }
+
+        row.innerHTML = `
+          <div>
+            <div class="flex items-center gap-2 mb-1 flex-wrap">
+              <span class="w-6 h-6 rounded-full bg-amber-500 text-white font-black text-xs flex items-center justify-center shrink-0 shadow-2xs">
+                ${item.id}
+              </span>
+              <span class="en-font font-bold text-slate-800 text-sm sm:text-base">${item.prefix}</span>
+              ${slotHtml}
+              <span class="en-font font-bold text-slate-800 text-sm sm:text-base">${item.suffix}</span>
+              <span class="text-xl shrink-0 select-none">${item.icon}</span>
+            </div>
+            <p class="text-[11px] font-bold text-slate-500 mt-1 pt-1 border-t border-slate-100" dir="rtl">
+              ${item.arabic}
+            </p>
+          </div>
+          <div class="mt-1 flex justify-end">
+            <button onclick="speakEx1FullSentence(${item.id})" class="text-xs text-amber-700 hover:text-amber-900 p-1 rounded-md transition flex items-center gap-1" title="استمع للجملة كاملة">
+              <span>🔊</span>
+              <span>استمع للجملة</span>
+            </button>
+          </div>
+        `;
+
+        container.appendChild(row);
+      });
+    }
+
+    function handleEx1Drop(e, slotId) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('drag-over');
+      const word = e.dataTransfer.getData("text/plain") || selectedEx1Word;
+      if (word) placeEx1Word(slotId, word);
+    }
+
+    function handleEx1SlotClick(slotId) {
+      if (selectedEx1Word) {
+        placeEx1Word(slotId, selectedEx1Word);
+      } else {
+        sfx.playPop();
+        showFeedbackToast(false, "اختر فعلاً من صندوق الكلمات أولاً ثم انقر في الفراغ.");
+      }
+    }
+
+    function clearEx1Slot(slotId) {
+      sfx.playPop();
+      ex1SlotsState[slotId] = null;
+      renderEx1WordBank();
+      renderEx1Sentences();
+      updateScoreBadge();
+    }
+
+    function placeEx1Word(slotId, word) {
+      const item = EX1_DATA.find(i => i.id === slotId);
+      const isCorrect = (word.toLowerCase() === item.correct.toLowerCase());
+
+      ex1SlotsState[slotId] = word;
+      selectedEx1Word = null;
+      renderEx1WordBank();
+      renderEx1Sentences();
+      updateScoreBadge();
+
+      const card = document.getElementById(`ex1-row-${slotId}`);
+
+      if (isCorrect) {
+        sfx.playSuccess();
+        speakArabicFeedback(true, () => {
+          canadianSpeaker.speak(`${item.prefix} ${word} ${item.suffix}`);
+        });
+        if (card) {
+          card.classList.remove('shake-slot');
+          card.classList.add('pop-success');
+        }
+        showFeedbackToast(true, `ممتاز! (${word}) هي الإجابة الصحيحة. ${item.arabic}`);
+        fireConfetti(0.35);
+      } else {
+        sfx.playError();
+        speakArabicFeedback(false);
+        if (card) {
+          card.classList.remove('pop-success');
+          card.classList.add('shake-slot');
+        }
+        showFeedbackToast(false, `إجابة خاطئة! (${word}) غير صحيحة هنا. راجع تصريف الفعل بالجدول.`);
+      }
+    }
+
+    function speakEx1FullSentence(slotId) {
+      const item = EX1_DATA.find(i => i.id === slotId);
+      const val = ex1SlotsState[slotId] || item.correct;
+      const text = `${item.prefix} ${val} ${item.suffix}`;
+      canadianSpeaker.speak(text);
+    }
+
+    /* =========================================================================
+       5. PRACTICAL EXERCISE 2: MATCHING V1 TO V2 (تطبيق المطابقة)
+       ========================================================================= */
+    const MATCH_ITEMS = [
+      { id: 'm1', v1: 'see', v2: 'saw', arabic: 'يرى ➔ رأى' },
+      { id: 'm2', v1: 'meet', v2: 'met', arabic: 'يقابل ➔ قابل' },
+      { id: 'm3', v1: 'take', v2: 'took', arabic: 'يأخذ ➔ أخذ' },
+      { id: 'm4', v1: 'make', v2: 'made', arabic: 'يصنع ➔ صنع' },
+      { id: 'm5', v1: 'have', v2: 'had', arabic: 'يملك ➔ ملك' },
+      { id: 'm6', v1: 'get', v2: 'got', arabic: 'يحصل على ➔ حصل على' }
+    ];
+
+    let selectedMatchV1 = null;
+    let matchedPairs = [];
+
+    function renderMatchingBoard() {
+      const colV1 = document.getElementById('matchColV1');
+      const colV2 = document.getElementById('matchColV2');
+
+      // Keep headers
+      colV1.innerHTML = `<h4 class="text-xs sm:text-sm font-black text-sky-900 bg-sky-100 py-1.5 px-3 rounded-xl text-center">V1 Base (المصدر)</h4>`;
+      colV2.innerHTML = `<h4 class="text-xs sm:text-sm font-black text-amber-900 bg-amber-100 py-1.5 px-3 rounded-xl text-center">V2 Past (الماضي)</h4>`;
+
+      // Render V1 column
+      MATCH_ITEMS.forEach(item => {
+        const isMatched = matchedPairs.includes(item.id);
+        const btn = document.createElement('button');
+        btn.id = `match-v1-${item.id}`;
+        btn.className = `w-full py-2.5 px-3.5 rounded-2xl border-2 font-black en-font text-sm sm:text-base flex items-center justify-between transition shadow-xs ${
+          isMatched
+            ? 'bg-emerald-100 border-emerald-400 text-emerald-950 opacity-60 pointer-events-none'
+            : selectedMatchV1 === item.id
+            ? 'bg-sky-200 border-sky-500 text-sky-950 ring-4 ring-sky-300 scale-102'
+            : 'bg-white border-sky-300 text-slate-800 hover:bg-sky-50'
+        }`;
+        btn.innerHTML = `<span>${item.v1}</span> <span class="text-xs font-bold text-slate-500" dir="rtl">${item.arabic.split('➔')[0]}</span>`;
+        btn.onclick = () => handleMatchV1Click(item.id, item.v1);
+        colV1.appendChild(btn);
+      });
+
+      // Render V2 column (randomized fixed order)
+      const v2Order = ['met', 'saw', 'made', 'had', 'got', 'took'];
+      v2Order.forEach(v2Word => {
+        const matchObj = MATCH_ITEMS.find(m => m.v2 === v2Word);
+        const isMatched = matchedPairs.includes(matchObj.id);
+        const btn = document.createElement('button');
+        btn.id = `match-v2-${matchObj.id}`;
+        btn.className = `w-full py-2.5 px-3.5 rounded-2xl border-2 font-black en-font text-sm sm:text-base flex items-center justify-between transition shadow-xs ${
+          isMatched
+            ? 'bg-emerald-100 border-emerald-400 text-emerald-950 opacity-60 pointer-events-none'
+            : 'bg-white border-amber-300 text-slate-800 hover:bg-amber-50'
+        }`;
+        btn.innerHTML = `<span>${v2Word}</span> <span class="text-xs font-bold text-slate-500" dir="rtl">${matchObj.arabic.split('➔')[1]}</span>`;
+        btn.onclick = () => handleMatchV2Click(matchObj.id, v2Word);
+        colV2.appendChild(btn);
+      });
+    }
+
+    function handleMatchV1Click(id, word) {
+      sfx.playPop();
+      canadianSpeaker.speak(word);
+      selectedMatchV1 = (selectedMatchV1 === id) ? null : id;
+      renderMatchingBoard();
+      if (selectedMatchV1) {
+        showFeedbackToast(true, `تم اختيار (${word}). الآن اختر تصريف الماضي المطابق له.`);
+      }
+    }
+
+    function handleMatchV2Click(id, word) {
+      if (!selectedMatchV1) {
+        sfx.playPop();
+        showFeedbackToast(false, "اختر فعلاً من قائمة المصدر V1 أولاً ثم اختر تصريفه في الماضي.");
+        return;
+      }
+
+      if (selectedMatchV1 === id) {
+        // Correct Match!
+        matchedPairs.push(id);
+        selectedMatchV1 = null;
+        sfx.playSuccess();
+        speakArabicFeedback(true, () => {
+          canadianSpeaker.speak(`${word}`);
+        });
+        renderMatchingBoard();
+        updateScoreBadge();
+        showFeedbackToast(true, `إجابة صحيحة! تطابق ممتاز.`);
+        fireConfetti(0.35);
+      } else {
+        // Wrong match
+        sfx.playError();
+        speakArabicFeedback(false);
+        const cardV2 = document.getElementById(`match-v2-${id}`);
+        if (cardV2) {
+          cardV2.classList.add('shake-slot');
+          setTimeout(() => cardV2.classList.remove('shake-slot'), 400);
+        }
+        showFeedbackToast(false, "إجابة خاطئة! هذان الفعلان غير متطابقين، حاول ثانية.");
+      }
+    }
+
+    /* =========================================================================
+       6. ROLE-PLAY CONVERSATION LOGIC (سارة وليلى)
+       ========================================================================= */
+    const RP_LINES = [
+      { id: 1, speaker: "Sarah", text: "What did you do yesterday, Laila?", elId: "rpBubble1" },
+      { id: 2, speaker: "Laila", text: "I bought a book, drank fresh orange juice, and saw my teacher!", elId: "rpBubble2" }
+    ];
+
+    function speakRolePlayLine(lineId, onEnd = null) {
+      sfx.playPop();
+      const line = RP_LINES.find(l => l.id === lineId);
+      const bubble = document.getElementById(line.elId);
+
+      document.querySelectorAll('#rpBubble1, #rpBubble2').forEach(b => b.classList.remove('ring-4', 'ring-purple-400', 'bg-purple-100'));
+      if (bubble) bubble.classList.add('ring-4', 'ring-purple-400', 'bg-purple-100');
+
+      canadianSpeaker.speak(line.text, () => {
+        if (bubble) bubble.classList.remove('ring-4', 'ring-purple-400', 'bg-purple-100');
+        if (onEnd) onEnd();
+      });
+    }
+
+    function playFullRolePlay() {
+      speakRolePlayLine(1, () => {
+        setTimeout(() => {
+          speakRolePlayLine(2);
+        }, 600);
+      });
+    }
+
+    /* =========================================================================
+       7. GLOBAL SCORE & RESET
+       ========================================================================= */
+    function updateScoreBadge() {
+      let score = 0;
+
+      // Exercise 1 score (max 6)
+      EX1_DATA.forEach(i => {
+        if (ex1SlotsState[i.id] && ex1SlotsState[i.id].toLowerCase() === i.correct.toLowerCase()) {
+          score++;
+        }
+      });
+
+      // Exercise 2 score (max 6)
+      score += matchedPairs.length;
+
+      document.getElementById('scoreDisplay').textContent = `${score} / 12`;
+
+      if (score === 12) {
+        fireConfetti(1.2);
+        showFeedbackToast(true, "ما شاء الله! حققت الدرجة الكاملة في جدول وتطبيقات الأفعال 12 من 12 🏆");
+      }
+    }
+
+    function resetAllExercises() {
+      sfx.playPop();
+      
+      // Reset Ex 1
+      EX1_DATA.forEach(d => ex1SlotsState[d.id] = null);
+      selectedEx1Word = null;
+      renderEx1WordBank();
+      renderEx1Sentences();
+
+      // Reset Ex 2
+      selectedMatchV1 = null;
+      matchedPairs = [];
+      renderMatchingBoard();
+
+      updateScoreBadge();
+      showFeedbackToast(true, "تمت إعادة تعيين جميع التمارين بنجاح 🔄");
+    }
+
+    function scrollToSection(id) {
+      sfx.playPop();
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function fireConfetti(power = 0.5) {
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: Math.floor(70 * power),
+          spread: 80,
+          origin: { y: 0.6 }
+        });
+      }
+    }
+
+    /* =========================================================================
+       INITIALIZATION ON LOAD
+       ========================================================================= */
+    window.onload = function() {
+      renderEx1WordBank();
+      renderEx1Sentences();
+      renderMatchingBoard();
+      updateScoreBadge();
+    };
+  </script>
+</body>
+</html>
